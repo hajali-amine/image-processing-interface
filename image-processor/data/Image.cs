@@ -160,6 +160,42 @@ namespace image_processor.data
         {
             return string.Format("width={0},height={1},grayscale={2},nbPixels={3},avg={4:0.##},std={5:0.##},dynamic=[{6},{7}]", this.Width, this.Height, this.Grayscale - 1, this.Length, this.Avg, this.Std, this.Dynamic.Item1, this.Dynamic.Item2);
         }
+        public Image Convolute(List<List<double>> filter)
+        {
+            Image newImage = new Image(this.Height, this.Width, this.Grayscale);
+            for (int i = 0; i < this.Height; i++)
+            {
+                newImage.Pixels.Add(new List<int>());
+                for (int j = 0; j < this.Width; j++)
+                {
+                    double conv = 0;
+                    for (int py = -filter.Count / 2; py < filter.Count / 2 + 1; py++)
+                    {
+                        for (int px = -filter.Count / 2; px < filter.Count / 2 + 1; px++)
+                        {
+                            conv += this.Pixels[Math.Min(Math.Max(0, py + i), this.Height - 1)][Math.Min(Math.Max(0, px + j), this.Width - 1)] * filter[py + filter.Count / 2][px + filter.Count / 2];
+                        }
+                    }
+                    newImage.Pixels[i].Add(Math.Min(Math.Max(0, (int) conv), this.Grayscale - 1));
+                }
+            }
 
+            return newImage;
+        }
+        public Image Lut(double a, double b)
+        {
+            //Apply transformation of I'(i,j) = a*I(i,j) + b
+            Image newImage = new Image(this.Height, this.Width, this.Grayscale);
+            for (int i = 0; i < this.Height; i++)
+            {
+                newImage.Pixels.Add(new List<int>());
+                for (int j = 0; j < this.Width; j++)
+                {
+                    newImage.Pixels[i].Add(Math.Min(Math.Max(0, (int)(a * this.Pixels[i][j] + b)), this.Grayscale - 1));
+                }
+            }
+
+            return newImage;
+        }
     }
 }

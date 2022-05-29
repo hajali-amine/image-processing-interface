@@ -50,6 +50,26 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            
+            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                <StackPanel Orientation="Vertical">
+                    <Label>What filter to use?</Label>
+                    <TextBox Height="20" Name="FilterSize" VerticalAlignment="Top"/>
+                    <RadioButton Margin="10,0,0,0" x:Name="Average" Checked="OnFilterChecked">Average</RadioButton>
+                    <RadioButton Margin="10,0,0,0" x:Name="Gaussian" Checked="OnFilterChecked">Gaussian</RadioButton>
+                    <RadioButton Margin="10,0,0,0" x:Name="Median" Checked="OnFilterChecked">Median</RadioButton>
+                    <RadioButton Margin="10,0,0,0" x:Name="Laplacian" Checked="OnFilterChecked">Laplacian</RadioButton>
+                    <RadioButton Margin="10,0,0,0" x:Name="Prewitt" Checked="OnFilterChecked">Prewitt</RadioButton>
+                    <RadioButton Margin="10,0,0,0" x:Name="None" Checked="OnFilterChecked">None</RadioButton>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Left">
+                    <Label>Apply LUT?</Label>
+                    <TextBox Height="20" Width="20" Name="Lut_a" VerticalAlignment="Top" Margin="10" Text="1"/>
+                    <TextBox Height="20" Width="20" Name="Lut_b" VerticalAlignment="Top" Margin="10" Text="0"/>
+                    <Button Width="20" Margin="10" Click="OnLutClicked">Lut</Button>
+            </StackPanel>
 
             <Image 
                 Margin="0, 0, 16, 10" 
