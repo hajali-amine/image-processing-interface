@@ -22,6 +22,7 @@ namespace image_processor
     /// </summary>
     public partial class MainWindow : Window
     {
+        private data.Image image = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -29,16 +30,33 @@ namespace image_processor
 
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog op = new OpenFileDialog();
-            op.Title = "Select a picture";
+            OpenFileDialog op = new OpenFileDialog
+            {
+                Title = "Select a picture"
+            };
             if (op.ShowDialog() == true)
             {
-                data.Image image = ImageIO.Read(op.FileName);
-                //ImageIO.WriteAsync("tst.pgm", image);
-                imgPhoto.Source = image.ToBitmap();
+                this.image = ImageIO.Read(op.FileName);
+                this.ImageLoaded.Source = image.ToBitmap();
+                this.Histogram.Source = HistogramIO.GetImage(this.image.Histogram);
+                this.StatsText.Text = this.image.GetStatsText();
             }
-
         }
 
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.image != null)
+            {
+                SaveFileDialog sv = new SaveFileDialog
+                {
+                    Title = "Save your picture",
+                    Filter = "PGM image | *.pgm"
+                };
+                if (sv.ShowDialog() == true)
+                {
+                    _ = ImageIO.WriteAsync(sv.FileName, this.image);
+                }
+            }
+        }
     }
 }

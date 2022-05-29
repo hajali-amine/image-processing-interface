@@ -12,7 +12,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="QuickChart" Version="2.3.0" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="Uno.UI" Version="4.3.6" />
   </ItemGroup>
 
 </Project>

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace image_processor.data
@@ -154,6 +155,10 @@ namespace image_processor.data
             bitmapImage.StreamSource = ms;
             bitmapImage.EndInit();
             return bitmapImage;
+        }
+        public string GetStatsText()
+        {
+            return string.Format("width={0},height={1},grayscale={2},nbPixels={3},avg={4:0.##},std={5:0.##},dynamic=[{6},{7}]", this.Width, this.Height, this.Grayscale - 1, this.Length, this.Avg, this.Std, this.Dynamic.Item1, this.Dynamic.Item2);
         }
 
     }
